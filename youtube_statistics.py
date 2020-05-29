@@ -39,6 +39,28 @@ class YTstats:
 			url+= "&maxResults="+str(limit)
 		print(url)
 
+	def _get_channel_videos_per_page(self,url):
+		json_url = requests.get(url)
+		data = json.loads(json_url.text)
+		channel_videos = dict()
+		#checking for items key
+		if 'items' not in data:
+			return channel_videos,None
+		item_data = data['items']
+		#return value for key nextPageToken else instead of KeyError return None
+		nextPageToken = data.get("nextPageToken",None)
+		# iterating over items to find videos
+		for item in item_data:
+			try:
+				kind = item['id']['kind']
+				if kind == "youtube#video":
+					video_id = item['id']['videoId']
+					# create an entry for the video to later fill with statistics about the video
+					channel_videos[video_id] = {}
+			except KeyError:
+				print("Key Error encountered !")
+		return channel_videos,nextPageToken
+
 
 	def dump(self):
 		if self.channel_statistics is None:

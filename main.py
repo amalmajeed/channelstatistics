@@ -10,11 +10,10 @@ from youtube_statistics import YTstats
 
 
 
-
-
-
-
-
 yt = YTstats(API_KEY,channel_id)
-data = yt.get_channel_statistics()
-yt.dump()
+
+
+#data = yt.get_channel_statistics()
+#yt.dump()
+
+yt.get_channel_video_data()

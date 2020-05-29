@@ -36,4 +36,5 @@ class YTstats:
 		with open(file_name,"w") as f:
 			json.dump(self.channel_statistics,f,indent = 4)
 		print("file dumped !\n")
+		f.close()
 
